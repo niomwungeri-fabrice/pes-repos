@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+<h:head>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<h:outputStylesheet library="css" name="bootstrap.min.css" />
+	<h:outputStylesheet library="css" name="bootstrap-theme.css" />
+
+</h:head>
+<h:body>
+	<div class="container" style="margin-top: 10px">
+
+		<div class="jumbotron" style="background-color: #3790fc;" />
+
+		<p:tabView>
+			<p:tab title="Employees">
+				<h:form id="empForm">
+					<p:growl id="growl" showDetail="true"/>
+					<h:panelGrid cellpadding="10">
+						<p:watermark value="Employee Id" for="empId" />
+						<p:inputText value="#{createEmployee.employee.employeeId}"
+							style="margin-top:7px;" id="empId" />
+
+						<p:watermark value="First name" for="firstname" />
+						<p:inputText value="#{createEmployee.employee.firstname}"
+							style="margin-top:7px;" id="firstname" />
+
+						<p:watermark value="Last name" for="lastname" />
+						<p:inputText value="#{createEmployee.employee.lastname}"
+							style="margin-top:7px;" id="lastname" />
+
+						<p:watermark value="Phone number" for="phoneNumber" />
+						<p:inputText value="#{createEmployee.employee.phoneNumber}"
+							style="margin-top:7px;margin-bottom:7px" id="phoneNumber" />
+
+					</h:panelGrid>
+					<p:commandButton action="#{createEmployee.createEmploye}"
+						value="Register Employee" update="empForm" />
+					<p:separator />
+					<p:dataTable value="#{createEmployee.allemployee}" var="empList">
+						<f:facet name="header">
+        					List of Employees
+    					</f:facet>
+						<p:column headerText="Employee Id">
+							<h:outputLabel value="#{empList.employeeId}" />
+						</p:column>
+
+						<p:column headerText="First name">
+							<h:outputLabel value="#{empList.firstname}" />
+						</p:column>
+
+						<p:column headerText="Last name">
+							<h:outputLabel value="#{empList.lastname}" />
+						</p:column>
+
+						<p:column headerText="Phone">
+							<h:outputLabel value="#{empList.phoneNumber}" />
+						</p:column>
+
+						<p:column headerText="Hired Date">
+							<h:outputLabel value="#{empList.hiredDate}" />
+						</p:column>
+						<f:facet name="footer">
+        						In total there are #{fn:length(createEmployee.allemployee)} Employee(s).
+    					</f:facet>
+					</p:dataTable>
+				</h:form>
+			</p:tab>
+			<p:tab title="Godfather Part II">
+				<h:panelGrid columns="2" cellpadding="10">
+
+					<h:outputText value="Francis Ford Coppola's legendary..." />
+				</h:panelGrid>
+			</p:tab>
+			<p:tab title="Godfather Part III">
+				<h:panelGrid columns="2" cellpadding="10">
+					<h:outputText value="After a break of more than 15 years..." />
+				</h:panelGrid>
+			</p:tab>
+		</p:tabView>
+
+	</div>
+</h:body>
+</html>
