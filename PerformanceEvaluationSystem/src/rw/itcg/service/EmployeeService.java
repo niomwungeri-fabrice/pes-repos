@@ -19,15 +19,18 @@ public class EmployeeService extends TransactionAware {
 
 	public void createEmploye(Employee employee) {
 		empDao.save(employee);
-		
+
 	}
 
 	public List<Employee> findAll() {
-		try {
-			return empDao.findAll();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return null;
-		}
+		return empDao.findAll();
+	}
+
+	public void deleteEmployee(Employee employe) {
+		empDao.delete(employe);
+	}
+
+	public void updateEmployee(Employee employee) {
+		empDao.update(employee);
 	}
 }

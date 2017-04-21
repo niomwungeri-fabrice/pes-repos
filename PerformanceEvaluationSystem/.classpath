@@ -34,7 +34,11 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/PrimefacesThemes"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/PrimefacesThemes">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Spring">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>

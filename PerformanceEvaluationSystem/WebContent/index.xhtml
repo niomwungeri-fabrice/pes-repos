@@ -18,9 +18,9 @@
 		<div class="jumbotron" style="background-color: #3790fc;" />
 
 		<p:tabView>
-			<p:tab title="Employees">
+			<p:tab title="Employees" id="empTab">
 				<h:form id="empForm">
-					<p:growl id="growl" showDetail="true"/>
+					<p:growl id="growl" showDetail="true" />
 					<h:panelGrid cellpadding="10">
 						<p:watermark value="Employee Id" for="empId" />
 						<p:inputText value="#{createEmployee.employee.employeeId}"
@@ -40,18 +40,40 @@
 
 					</h:panelGrid>
 					<p:commandButton action="#{createEmployee.createEmploye}"
-						value="Register Employee" update="empForm" />
+						value="Register Employee" update="empForm"
+						icon="fa fa-plus-circle" />
 					<p:separator />
-					<p:dataTable value="#{createEmployee.allemployee}" var="empList">
+					<p:dataTable id="empTable" value="#{createEmployee.allemployee}"
+						var="empList" style="margin-top:7px" paginator="true" rows="5"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+							{PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} 
+							{RowsPerPageDropdown}"
+						currentPageReportTemplate="({startRecord} - {endRecord}) of 
+							{totalRecords} Records."
+						rowsPerPageTemplate="5,10,15" editable="true">
+
+
+						<p:ajax event="rowEdit" listener="#{createEmployee.onEdit}"
+							update="empTable" />
+						<p:ajax event="rowEditCancel"
+							listener="#{createEmployee.onCancel}" update="empTable" />
+
 						<f:facet name="header">
         					List of Employees
     					</f:facet>
-						<p:column headerText="Employee Id">
+						<p:column headerText="Employee Id" style="width:10%">
 							<h:outputLabel value="#{empList.employeeId}" />
 						</p:column>
 
 						<p:column headerText="First name">
-							<h:outputLabel value="#{empList.firstname}" />
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputLabel value="#{empList.firstname}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText value="#{empList.firstname}" />
+								</f:facet>
+							</p:cellEditor>
 						</p:column>
 
 						<p:column headerText="Last name">
@@ -65,19 +87,33 @@
 						<p:column headerText="Hired Date">
 							<h:outputLabel value="#{empList.hiredDate}" />
 						</p:column>
+						<p:column style="width:6%" headerText="Active">
+							<center>
+								<p:inputSwitch value="#{empList.state}" />
+							</center>
+						</p:column>
+						<p:column style="width:6%" headerText="Edit">
+							<center>
+								<p:rowEditor />
+							</center>
+						</p:column>
+						<p:column headerText="Delete">
+							<center>
+								<p:commandButton value=" Delete" icon="fa fa-remove" />
+							</center>
+						</p:column>
 						<f:facet name="footer">
         						In total there are #{fn:length(createEmployee.allemployee)} Employee(s).
     					</f:facet>
 					</p:dataTable>
 				</h:form>
 			</p:tab>
-			<p:tab title="Godfather Part II">
+			<p:tab title="Daily">
 				<h:panelGrid columns="2" cellpadding="10">
-
 					<h:outputText value="Francis Ford Coppola's legendary..." />
 				</h:panelGrid>
 			</p:tab>
-			<p:tab title="Godfather Part III">
+			<p:tab title="Stats and Analysis">
 				<h:panelGrid columns="2" cellpadding="10">
 					<h:outputText value="After a break of more than 15 years..." />
 				</h:panelGrid>

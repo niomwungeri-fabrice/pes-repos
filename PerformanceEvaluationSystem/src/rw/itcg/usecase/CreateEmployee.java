@@ -6,6 +6,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.event.RowEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -34,6 +35,30 @@ public class CreateEmployee {
 					new FacesMessage(FacesMessage.SEVERITY_INFO, null, "Error:" + e.getMessage()));
 		}
 
+	}
+
+	// row cancel
+	public void onCancel(RowEditEvent event) {
+		try {
+			Employee u = (Employee) event.getObject();
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Cancelled " + u.getFirstname(), null));
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error>>" + e.getMessage(), null));
+		}
+	}
+
+	public void onEdit(RowEditEvent event) {
+		try {
+			employee = (Employee) event.getObject();
+			empService.updateEmployee(employee);
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "User Updated", null));
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error>>" + e.getMessage(), null));
+		}
 	}
 
 	public List<Employee> getAllemployee() {
