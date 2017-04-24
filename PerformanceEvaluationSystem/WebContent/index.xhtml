@@ -24,20 +24,29 @@
 					<h:panelGrid cellpadding="10">
 						<p:watermark value="Employee Id" for="empId" />
 						<p:inputText value="#{createEmployee.employee.employeeId}"
-							style="margin-top:7px;" id="empId" />
+							style="margin-top:7px;" id="empId"
+							title="Enter Employee ID (e.g.EMP0001)" />
+						<p:tooltip for="empId" showEvent="focus" hideEvent="blur" />
 
 						<p:watermark value="First name" for="firstname" />
 						<p:inputText value="#{createEmployee.employee.firstname}"
-							style="margin-top:7px;" id="firstname" />
+							style="margin-top:7px;" id="firstname"
+							title="Enter firstname(e.g. Manzi)" />
+						<p:tooltip for="firstname" showEvent="focus" hideEvent="blur" />
 
 						<p:watermark value="Last name" for="lastname" />
 						<p:inputText value="#{createEmployee.employee.lastname}"
-							style="margin-top:7px;" id="lastname" />
+							title="Enter lastname(e.g. Eric)" style="margin-top:7px;"
+							id="lastname" />
+						<p:tooltip for="lastname" showEvent="focus" hideEvent="blur" />
 
 						<p:watermark value="Phone number" for="phoneNumber" />
 						<p:inputMask id="phoneNumber" mask="999 999 9999"
-							value="#{createEmployee.employee.phoneNumber}" 
-							label="Phone" style="margin-top:7px;margin-bottom:7px" />
+							value="#{createEmployee.employee.phoneNumber}" label="Phone"
+							style="margin-top:7px;margin-bottom:7px"
+							title="Enter Phone number (e.g.078 XXX XXXX)" />
+						<p:tooltip for="phoneNumber" showEvent="focus" hideEvent="blur" />
+
 
 					</h:panelGrid>
 					<p:commandButton action="#{createEmployee.createEmploye}"
@@ -107,7 +116,19 @@
 
 						<p:column headerText="Delete">
 							<center>
-								<p:commandButton value=" Delete" icon="fa fa-trash" />
+								<p:commandButton value="Delete" icon="fa fa-trash"
+									action="#{createEmployee.delete(empList)}"
+									update=":mainTab:empForm:growll empTable">
+									<p:confirm header="Confirmation"
+										message="Are you sure you want to detele this Employee?" />
+								</p:commandButton>
+								<p:confirmDialog global="true" hideEffect="fade"
+									showEffect="fade">
+									<p:commandButton value="Yes" styleClass="ui-confirmdialog-yes"
+										icon="fa fa-check" />
+									<p:commandButton value="No" styleClass="ui-confirmdialog-no"
+										icon="fa fa-close" />
+								</p:confirmDialog>
 							</center>
 						</p:column>
 						<p:column style="width:6%" headerText="Edit">

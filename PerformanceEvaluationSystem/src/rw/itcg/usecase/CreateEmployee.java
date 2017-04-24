@@ -24,6 +24,18 @@ public class CreateEmployee {
 	private EmployeeService empService;
 	private Employee employee = new Employee();
 
+	public void delete(Employee emp) {
+		try {
+			empService.deleteEmployee(emp);
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, null, "Employee "+emp.getFirstname()+" Deleted"));
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, null, "Error:" + e.getMessage()));
+		}
+	}
+
+	// create new employee
 	public void createEmploye() {
 		try {
 			empService.createEmploye(employee);
@@ -37,18 +49,19 @@ public class CreateEmployee {
 
 	}
 
-	// row cancel
+	// cancel on update
 	public void onCancel(RowEditEvent event) {
 		try {
 			Employee u = (Employee) event.getObject();
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Cancelled " + u.getFirstname(), null));
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Cancelled" + u.getFirstname(), null));
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error>>" + e.getMessage(), null));
 		}
 	}
 
+	// update employee
 	public void onEdit(RowEditEvent event) {
 		try {
 			employee = (Employee) event.getObject();
@@ -61,6 +74,7 @@ public class CreateEmployee {
 		}
 	}
 
+	// activate employee
 	public void activateEmployee(Employee emp) {
 		try {
 			this.employee = empService.findByUsername(emp.getEmployeeId());
@@ -83,6 +97,7 @@ public class CreateEmployee {
 
 	}
 
+	// find all employee
 	public List<Employee> getAllemployee() {
 		return empService.findAll();
 	}
