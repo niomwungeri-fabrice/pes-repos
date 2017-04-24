@@ -4,8 +4,12 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * @author NIYOMWUNGERI Apr 20, 2017, 8:51:25 AM
@@ -14,6 +18,8 @@ import javax.persistence.OneToMany;
 public class Employee extends GenericDomain {
 
 	private static final long serialVersionUID = 1L;
+	
+	
 	private String employeeId;
 	private String firstname;
 	private String lastname;
@@ -22,7 +28,8 @@ public class Employee extends GenericDomain {
 
 	@OneToMany(mappedBy = "employees")
 	private Set<TaskDone> taskList = new HashSet<>();
-
+	
+	
 	public void setEmployeeId(String employeeId) {
 		this.employeeId = employeeId;
 	}
@@ -30,7 +37,9 @@ public class Employee extends GenericDomain {
 	public void setHiredDate(Date hiredDate) {
 		this.hiredDate = hiredDate;
 	}
-
+	@GenericGenerator(name = "sequence_dep_id", strategy = "rw.itcg.util.EmployeeIDgenerator")
+	@GeneratedValue(generator = "sequence_dep_id")
+	@Column(unique = true)
 	public String getEmployeeId() {
 		return employeeId;
 	}

@@ -16,12 +16,16 @@ public class TestMyApp {
 			@SuppressWarnings("resource")
 			ApplicationContext ctx = new ClassPathXmlApplicationContext("classpath:rw/itcg/config/app-context.xml");
 			EmployeeService empService = ctx.getBean(EmployeeService.class);
-			for (Employee emp : empService.findAll()) {
-				System.out.println(emp.getFirstname() + "_" + emp.getLastname());
-			}
+			Employee emp = new Employee();
+			emp.setFirstname("fab");
+			emp.setLastname("fab");
+			emp.setPhoneNumber("2500");
+			emp.setState(false);
+			empService.createEmploye(emp);
+			System.out.println("success");
 
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("error:"+e.getMessage());
 		}
 
 	}

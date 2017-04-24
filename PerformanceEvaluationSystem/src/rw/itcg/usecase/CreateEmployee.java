@@ -28,10 +28,10 @@ public class CreateEmployee {
 		try {
 			empService.deleteEmployee(emp);
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, null, "Employee "+emp.getFirstname()+" Deleted"));
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Employee " + emp.getFirstname() + " Deleted", null));
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, null, "Error:" + e.getMessage()));
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Error:" + e.getMessage(), null));
 		}
 	}
 
@@ -41,10 +41,10 @@ public class CreateEmployee {
 			empService.createEmploye(employee);
 			employee = new Employee();
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, null, "Employee Registered Successfully"));
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Employee Registered Successfully", null));
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, null, "Error:" + e.getMessage()));
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Error:" + e.getMessage(), null));
 		}
 
 	}
@@ -53,8 +53,8 @@ public class CreateEmployee {
 	public void onCancel(RowEditEvent event) {
 		try {
 			Employee u = (Employee) event.getObject();
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Cancelled" + u.getFirstname(), null));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Changes are discarded for " + u.getFirstname(), null));
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error>>" + e.getMessage(), null));
@@ -67,7 +67,7 @@ public class CreateEmployee {
 			employee = (Employee) event.getObject();
 			empService.updateEmployee(employee);
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "User Updated", null));
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Employee info Updated", null));
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error>>" + e.getMessage(), null));

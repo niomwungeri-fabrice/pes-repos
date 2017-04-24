@@ -1,4 +1,4 @@
-package rw.itcg.domain;
+package rw.itcg.util;
 
 import java.io.Serializable;
 import java.sql.Connection;
@@ -22,9 +22,9 @@ public class EmployeeIDgenerator implements IdentifierGenerator {
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery("select count(employeeId) from Employee");
 			if (rs.next()) {
-				int id = rs.getInt(1) + 100;
+				
+				int id = rs.getInt(1) + 101;
 				String generatedId = prefix + new Integer(id).toString();
-				System.out.println("Generated Id: " + generatedId);
 				return generatedId;
 			}
 

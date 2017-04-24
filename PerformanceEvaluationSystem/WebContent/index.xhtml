@@ -20,7 +20,7 @@
 		<p:tabView id="mainTab">
 			<p:tab title="Employees" id="empTab">
 				<h:form id="form">
-					<p:growl id="msgs" showDetail="true" />
+					<p:growl id="msgs" />
 					<h:panelGrid cellpadding="10">
 						<p:watermark value="Employee Id" for="empId" />
 						<p:inputText value="#{createEmployee.employee.employeeId}"
@@ -118,11 +118,11 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						
+
 						<p:column style="width:4%" headerText="Edit">
 							<p:rowEditor />
 						</p:column>
-						
+
 						<p:column style="width:6%" headerText="Active">
 							<center>
 								<p:inputSwitch value="#{empList.state}">
@@ -149,11 +149,11 @@
 								</p:confirmDialog>
 							</center>
 						</p:column>
-						
+
 						<f:facet name="footer">
         						In total there are #{fn:length(createEmployee.allemployee)} Employee(s).
     					</f:facet>
-    					
+
 					</p:dataTable>
 				</h:form>
 			</p:tab>
@@ -166,6 +166,15 @@
 			<p:tab title="Stats and Analysis">
 				<h:panelGrid columns="2" cellpadding="10">
 					<h:outputText value="After a break of more than 15 years..." />
+				</h:panelGrid>
+			</p:tab>
+			<p:tab>
+				<f:facet name="title">
+					<h:outputText value="Settings" />
+					<p:graphicImage value="/resources/images/Settings-icon.png" />
+				</f:facet>
+				<h:panelGrid columns="2" cellpadding="10">
+					<h:outputText value="Settings" />
 				</h:panelGrid>
 			</p:tab>
 		</p:tabView>
