@@ -19,8 +19,8 @@
 
 		<p:tabView id="mainTab">
 			<p:tab title="Employees" id="empTab">
-				<h:form id="empForm">
-					<p:growl id="growll" showDetail="true" />
+				<h:form id="form">
+					<p:growl id="msgs" showDetail="true" />
 					<h:panelGrid cellpadding="10">
 						<p:watermark value="Employee Id" for="empId" />
 						<p:inputText value="#{createEmployee.employee.employeeId}"
@@ -50,12 +50,11 @@
 
 					</h:panelGrid>
 					<p:commandButton action="#{createEmployee.createEmploye}"
-						value="Register Employee" update="empForm"
-						icon="fa fa-plus-circle" />
+						value="Register Employee" update="form" icon="fa fa-plus-circle" />
 					<p:separator />
-
-					<p:dataTable id="empTable" value="#{createEmployee.allemployee}"
-						var="empList" style="margin-top:7px" paginator="true" rows="5"
+					<p:dataTable id="employeeTable" var="empList"
+						value="#{createEmployee.allemployee}" style="margin-top:7px"
+						paginator="true" rows="5"
 						paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
 							{PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} 
 							{RowsPerPageDropdown}"
@@ -63,26 +62,26 @@
 							{totalRecords} Records."
 						rowsPerPageTemplate="5,10,15" editable="true">
 
-
-						<p:ajax event="rowEdit" listener="#{createEmployee.onEdit}"
-							update=":mainTab:empForm:growll" />
-						<p:ajax event="rowEditCancel"
-							listener="#{createEmployee.onCancel}"
-							update=":mainTab:empForm:growll" />
 						<f:facet name="header">
         					List of Employees
     					</f:facet>
-						<p:column headerText="Employee Id" style="width:10%">
-							<h:outputLabel value="#{empList.employeeId}" />
+
+						<p:ajax event="rowEdit" listener="#{createEmployee.onEdit}"
+							update=":mainTab:form:msgs" />
+						<p:ajax event="rowEditCancel"
+							listener="#{createEmployee.onCancel}" update=":mainTab:form:msgs" />
+
+						<p:column headerText="EmployeeId" style="width:10%">
+							<p:outputLabel value="#{empList.employeeId}" style="width:10%" />
 						</p:column>
 
 						<p:column headerText="First name">
 							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputLabel value="#{empList.firstname}" />
+									<p:outputLabel value="#{empList.firstname}" />
 								</f:facet>
 								<f:facet name="input">
-									<p:inputText value="#{empList.firstname}" />
+									<p:inputText value="#{empList.firstname}" label="Firstname" />
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
@@ -90,26 +89,45 @@
 						<p:column headerText="Last name">
 							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="#{empList.lastname}" />
+									<p:outputLabel value="#{empList.lastname}" />
 								</f:facet>
 								<f:facet name="input">
-									<p:inputText id="modelInput" value="#{empList.lastname}" />
+									<p:inputText value="#{empList.lastname}" label="Lastname" />
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
 
 						<p:column headerText="Phone">
-							<h:outputLabel value="#{empList.phoneNumber}" />
+							<p:cellEditor>
+								<f:facet name="output">
+									<p:outputLabel value="#{empList.phoneNumber}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText value="#{empList.phoneNumber}" label="Phone" />
+								</f:facet>
+							</p:cellEditor>
 						</p:column>
 
 						<p:column headerText="Hired Date">
-							<h:outputLabel value="#{empList.hiredDate}" />
+							<p:cellEditor>
+								<f:facet name="output">
+									<p:outputLabel value="#{empList.phoneNumber}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText value="#{empList.phoneNumber}" label="Phone" />
+								</f:facet>
+							</p:cellEditor>
 						</p:column>
+						
+						<p:column style="width:4%" headerText="Edit">
+							<p:rowEditor />
+						</p:column>
+						
 						<p:column style="width:6%" headerText="Active">
 							<center>
 								<p:inputSwitch value="#{empList.state}">
 									<p:ajax listener="#{createEmployee.activateEmployee(empList)}"
-										update=":mainTab:empForm:growll" />
+										update=":mainTab:form:msgs" />
 								</p:inputSwitch>
 							</center>
 						</p:column>
@@ -118,7 +136,7 @@
 							<center>
 								<p:commandButton value="Delete" icon="fa fa-trash"
 									action="#{createEmployee.delete(empList)}"
-									update=":mainTab:empForm:growll empTable">
+									update=":mainTab:form:msgs employeeTable">
 									<p:confirm header="Confirmation"
 										message="Are you sure you want to detele this Employee?" />
 								</p:commandButton>
@@ -131,17 +149,15 @@
 								</p:confirmDialog>
 							</center>
 						</p:column>
-						<p:column style="width:6%" headerText="Edit">
-							<center>
-								<p:rowEditor />
-							</center>
-						</p:column>
+						
 						<f:facet name="footer">
         						In total there are #{fn:length(createEmployee.allemployee)} Employee(s).
     					</f:facet>
+    					
 					</p:dataTable>
 				</h:form>
 			</p:tab>
+
 			<p:tab title="Daily">
 				<h:panelGrid columns="2" cellpadding="10">
 					<h:outputText value="Francis Ford Coppola's legendary..." />
