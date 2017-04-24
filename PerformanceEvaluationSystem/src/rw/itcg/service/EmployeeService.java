@@ -17,6 +17,10 @@ public class EmployeeService extends TransactionAware {
 	@Autowired
 	private EmployeeDao empDao;
 
+	public Employee findByUsername(String id) {
+		return empDao.findById(id);
+	}
+
 	public void createEmploye(Employee employee) {
 		empDao.save(employee);
 

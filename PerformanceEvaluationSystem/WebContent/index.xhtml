@@ -57,7 +57,6 @@
 							update="empTable" />
 						<p:ajax event="rowEditCancel"
 							listener="#{createEmployee.onCancel}" update="empTable" />
-
 						<f:facet name="header">
         					List of Employees
     					</f:facet>
@@ -89,7 +88,10 @@
 						</p:column>
 						<p:column style="width:6%" headerText="Active">
 							<center>
-								<p:inputSwitch value="#{empList.state}" />
+								<p:inputSwitch value="#{empList.state}">
+									<p:ajax listener="#{createEmployee.activateEmployee(empList)}"
+										update="empTable" />
+								</p:inputSwitch>
 							</center>
 						</p:column>
 						<p:column style="width:6%" headerText="Edit">

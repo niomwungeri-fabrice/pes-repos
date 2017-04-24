@@ -61,6 +61,28 @@ public class CreateEmployee {
 		}
 	}
 
+	public void activateEmployee(Employee emp) {
+		try {
+			this.employee = empService.findByUsername(emp.getEmployeeId());
+			if (employee.isState()) {
+				employee.setState(false);
+				empService.updateEmployee(employee);
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Employee Suspended", null));
+			} else {
+				employee.setState(true);
+				empService.updateEmployee(employee);
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Employee Activated", null));
+			}
+		} catch (Exception e) {
+
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error : ", e.getMessage()));
+		}
+
+	}
+
 	public List<Employee> getAllemployee() {
 		return empService.findAll();
 	}
