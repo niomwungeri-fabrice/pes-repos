@@ -17,10 +17,10 @@
 
 		<div class="jumbotron" style="background-color: #3790fc;" />
 
-		<p:tabView>
+		<p:tabView id="mainTab">
 			<p:tab title="Employees" id="empTab">
 				<h:form id="empForm">
-					<p:growl id="growl" showDetail="true" />
+					<p:growl id="growll" showDetail="true" />
 					<h:panelGrid cellpadding="10">
 						<p:watermark value="Employee Id" for="empId" />
 						<p:inputText value="#{createEmployee.employee.employeeId}"
@@ -35,14 +35,16 @@
 							style="margin-top:7px;" id="lastname" />
 
 						<p:watermark value="Phone number" for="phoneNumber" />
-						<p:inputText value="#{createEmployee.employee.phoneNumber}"
-							style="margin-top:7px;margin-bottom:7px" id="phoneNumber" />
+						<p:inputMask id="phoneNumber" mask="999 999 9999"
+							value="#{createEmployee.employee.phoneNumber}" 
+							label="Phone" style="margin-top:7px;margin-bottom:7px" />
 
 					</h:panelGrid>
 					<p:commandButton action="#{createEmployee.createEmploye}"
 						value="Register Employee" update="empForm"
 						icon="fa fa-plus-circle" />
 					<p:separator />
+
 					<p:dataTable id="empTable" value="#{createEmployee.allemployee}"
 						var="empList" style="margin-top:7px" paginator="true" rows="5"
 						paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
@@ -54,9 +56,10 @@
 
 
 						<p:ajax event="rowEdit" listener="#{createEmployee.onEdit}"
-							update="empTable" />
+							update=":mainTab:empForm:growll" />
 						<p:ajax event="rowEditCancel"
-							listener="#{createEmployee.onCancel}" update="empTable" />
+							listener="#{createEmployee.onCancel}"
+							update=":mainTab:empForm:growll" />
 						<f:facet name="header">
         					List of Employees
     					</f:facet>
@@ -76,7 +79,14 @@
 						</p:column>
 
 						<p:column headerText="Last name">
-							<h:outputLabel value="#{empList.lastname}" />
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{empList.lastname}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText id="modelInput" value="#{empList.lastname}" />
+								</f:facet>
+							</p:cellEditor>
 						</p:column>
 
 						<p:column headerText="Phone">
@@ -90,18 +100,19 @@
 							<center>
 								<p:inputSwitch value="#{empList.state}">
 									<p:ajax listener="#{createEmployee.activateEmployee(empList)}"
-										update="empTable" />
+										update=":mainTab:empForm:growll" />
 								</p:inputSwitch>
+							</center>
+						</p:column>
+
+						<p:column headerText="Delete">
+							<center>
+								<p:commandButton value=" Delete" icon="fa fa-trash" />
 							</center>
 						</p:column>
 						<p:column style="width:6%" headerText="Edit">
 							<center>
 								<p:rowEditor />
-							</center>
-						</p:column>
-						<p:column headerText="Delete">
-							<center>
-								<p:commandButton value=" Delete" icon="fa fa-remove" />
 							</center>
 						</p:column>
 						<f:facet name="footer">
