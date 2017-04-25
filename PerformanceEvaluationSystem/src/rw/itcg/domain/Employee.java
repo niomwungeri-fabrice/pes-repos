@@ -24,7 +24,7 @@ public class Employee extends GenericDomain {
 	private String firstname;
 	private String lastname;
 	private String phoneNumber;
-	private Date hiredDate = new Date();
+	private Date hiredDate;
 
 	@OneToMany(mappedBy = "employees")
 	private Set<TaskDone> taskList = new HashSet<>();

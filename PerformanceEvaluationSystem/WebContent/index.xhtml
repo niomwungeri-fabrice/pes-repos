@@ -18,7 +18,11 @@
 		<div class="jumbotron" style="background-color: #3790fc;" />
 
 		<p:tabView id="mainTab">
-			<p:tab title="Employees" id="empTab">
+			<p:tab id="empTab">
+				<f:facet name="title">
+					<p:graphicImage value="/resources/images/User-blue-icon.png" />
+					<p:outputLabel value="Employees" />
+				</f:facet>
 				<h:form id="form">
 					<p:growl id="msgs" />
 					<h:panelGrid cellpadding="10">
@@ -47,10 +51,16 @@
 							title="Enter Phone number (e.g.078 XXX XXXX)" />
 						<p:tooltip for="phoneNumber" showEvent="focus" hideEvent="blur" />
 
+						<p:watermark value="Hired date" for="hiredDate" />
+						<p:calendar id="hiredDate" pattern="dd-MM-yyyy" mask="true"
+							value="#{createEmployee.employee.hiredDate}"
+							title="Enter hired date (e.g. dd-MM-yyyy)" />
+						<p:tooltip for="hiredDate" showEvent="focus" hideEvent="blur" />
 
 					</h:panelGrid>
 					<p:commandButton action="#{createEmployee.createEmploye}"
-						value="Register Employee" update="form" icon="fa fa-plus-circle" />
+						style="margin-top:7px;margin-bottom:7px" value="Register Employee"
+						update="form" icon="fa fa-plus-circle" />
 					<p:separator />
 					<p:dataTable id="employeeTable" var="empList"
 						value="#{createEmployee.allemployee}" style="margin-top:7px"
@@ -68,6 +78,7 @@
 
 						<p:ajax event="rowEdit" listener="#{createEmployee.onEdit}"
 							update=":mainTab:form:msgs" />
+
 						<p:ajax event="rowEditCancel"
 							listener="#{createEmployee.onCancel}" update=":mainTab:form:msgs" />
 
@@ -111,10 +122,10 @@
 						<p:column headerText="Hired Date">
 							<p:cellEditor>
 								<f:facet name="output">
-									<p:outputLabel value="#{empList.phoneNumber}" />
+									<p:outputLabel value="#{empList.hiredDate}" />
 								</f:facet>
 								<f:facet name="input">
-									<p:inputText value="#{empList.phoneNumber}" label="Phone" />
+									<p:inputText value="#{empList.hiredDate}" label="Hired Date" />
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
@@ -158,20 +169,56 @@
 				</h:form>
 			</p:tab>
 
-			<p:tab title="Daily">
-				<h:panelGrid columns="2" cellpadding="10">
-					<h:outputText value="Francis Ford Coppola's legendary..." />
-				</h:panelGrid>
+			<p:tab>
+				<f:facet name="title">
+					<p:graphicImage value="/resources/images/Utilities-tasks-icon.png" />
+					<p:outputLabel value="Task controll" />
+				</f:facet>
+
+				<h:form id="taskTabForm">
+					<p:growl id="msgs_task" />
+					<div class="row">
+						<div class="col-xs-6">
+							<p:watermark value="Search id,name,etc" for="findEmp" />
+							<p:autoComplete id="findEmp" value="#{taskControll.keyWord}"
+								completeMethod="#{taskControll.autoCompleteOwner}">
+
+								<p:ajax event="itemSelect"
+									listener="#{taskControll.onItemSelect}"
+									update=":mainTab:taskTabForm:msgs_task" />
+							</p:autoComplete>
+
+						</div>
+						<div class="col-xs-6">
+							<p:panel header="Employee Profile">
+
+							</p:panel>
+						</div>
+					</div>
+				</h:form>
+
 			</p:tab>
-			<p:tab title="Stats and Analysis">
+			<p:tab>
+				<f:facet name="title">
+					<p:graphicImage value="/resources/images/statistics.png" />
+					<p:outputLabel value="Stats and Analysis" />
+				</f:facet>
+				<p:chart type="line" model="#{statistics.dateModel}"
+					style="height:400px;" />
+			</p:tab>
+			<p:tab>
+				<f:facet name="title">
+					<p:graphicImage value="/resources/images/payment.png" />
+					<p:outputLabel value="Payments" />
+				</f:facet>
 				<h:panelGrid columns="2" cellpadding="10">
-					<h:outputText value="After a break of more than 15 years..." />
+					<h:outputText value="Settings" />
 				</h:panelGrid>
 			</p:tab>
 			<p:tab>
 				<f:facet name="title">
-					<h:outputText value="Settings" />
 					<p:graphicImage value="/resources/images/Settings-icon.png" />
+					<p:outputLabel value="Settings" />
 				</f:facet>
 				<h:panelGrid columns="2" cellpadding="10">
 					<h:outputText value="Settings" />

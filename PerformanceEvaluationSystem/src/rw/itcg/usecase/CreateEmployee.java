@@ -64,7 +64,7 @@ public class CreateEmployee {
 	// update employee
 	public void onEdit(RowEditEvent event) {
 		try {
-			employee = (Employee) event.getObject();
+			Employee employee = (Employee) event.getObject();
 			empService.updateEmployee(employee);
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Employee info Updated", null));
