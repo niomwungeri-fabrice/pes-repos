@@ -11,7 +11,9 @@ import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import rw.itcg.domain.Company;
 import rw.itcg.domain.Employee;
+import rw.itcg.domain.Job;
 import rw.itcg.service.EmployeeService;
 
 /**
@@ -24,10 +26,17 @@ public class TaskControll {
 	@Autowired
 	private EmployeeService empService;
 	private List<Employee> getAllemployee;
-	private double itemsDone;
+	private List<Company> companyList;
+	private List<Job> jobList;
+	private boolean disable;
+
+	private Double itemsDone;
 
 	public TaskControll() {
 		getAllemployee = new ArrayList<Employee>();
+		jobList = new ArrayList<Job>();
+		companyList = new ArrayList<Company>();
+		disable = false;
 	}
 
 	public List<String> autoCompleteOwner(String query) {
@@ -67,12 +76,35 @@ public class TaskControll {
 		this.keyWord = keyWord;
 	}
 
-	public double getItemsDone() {
+	public Double getItemsDone() {
 		return itemsDone;
 	}
 
-	public void setItemsDone(double itemsDone) {
+	public void setItemsDone(Double itemsDone) {
 		this.itemsDone = itemsDone;
 	}
 
+	public List<Company> getCompanyList() {
+		return companyList;
+	}
+
+	public void setCompanyList(List<Company> companyList) {
+		this.companyList = companyList;
+	}
+
+	public List<Job> getJobList() {
+		return jobList;
+	}
+
+	public void setJobList(List<Job> jobList) {
+		this.jobList = jobList;
+	}
+
+	public boolean isDisable() {
+		return disable;
+	}
+
+	public void setDisable(boolean disable) {
+		this.disable = disable;
+	}
 }

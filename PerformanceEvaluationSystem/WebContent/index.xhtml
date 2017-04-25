@@ -179,7 +179,9 @@
 					<p:growl id="msgs_task" />
 					<div class="row">
 						<div class="col-xs-3">
-							<p:watermark value="Search id,name,etc" for="findEmp" />
+							<p:outputLabel value="Search Employee:" />
+							<br />
+							<p:watermark value="Enter id,name,etc" for="findEmp" />
 							<p:autoComplete style="width:150px" id="findEmp"
 								value="#{taskControll.keyWord}"
 								completeMethod="#{taskControll.autoCompleteOwner}">
@@ -189,18 +191,49 @@
 							</p:autoComplete>
 
 						</div>
-						<div class="col-xs-5">
+						<div class="col-xs-7">
 							<p:repeat value="#{taskControll.getAllemployee}" var="e">
 								<p:panel header="Employe profile" style="margin-bottom:7px">
 									<p:panelGrid columns="2">
 										<p:outputLabel value="Employee Id:" />
 										<h:outputText value="#{e.employeeId}" />
+
+										<p:outputLabel value="First name:" />
+										<h:outputText value="#{e.firstname}" />
+
+										<p:outputLabel value="Last name:" />
+										<h:outputText value="#{e.lastname}" />
+
 									</p:panelGrid>
 									<p:separator />
-									<p:watermark value="Items" for="itemsDone" />
-									<p:inputText value="#{taskControll.itemsDone}" id="itemsDone"
-										title="Enter Items worked today" />
-									<p:tooltip showEvent="focus" hideEvent="blur" for="itemsDone" />
+									<p:fieldset legend="Target and achievement ">
+										<p:outputLabel value="Company:" />
+										<br />
+										<p:selectOneMenu value="#{taskControll.companyList}"
+											var="compList">
+											<f:selectItem itemLabel="Select organisazition" itemValue="" />
+										</p:selectOneMenu>
+										<br />
+
+										<p:outputLabel value="Job Done:" />
+										<br />
+										<p:selectOneMenu value="#{taskControll.jobList}" var="jList">
+											<f:selectItem itemLabel="Select Type of job done"
+												itemValue="" />
+										</p:selectOneMenu>
+										<br />
+										<p:outputLabel value="Items:" />
+										<br />
+										<p:inputText value="#{taskControll.itemsDone}" id="itemDone"
+											title="Enter Items worked today" />
+										<p:tooltip showEvent="focus" hideEvent="blur" for="itemDone" />
+										<br />
+
+										<p:commandButton value="Submitt" style="margin-top:7px"
+											disabled="#{taskControll.disable}" />
+
+									</p:fieldset>
+
 								</p:panel>
 							</p:repeat>
 						</div>
@@ -230,9 +263,15 @@
 					<p:graphicImage value="/resources/images/Settings-icon.png" />
 					<p:outputLabel value="Settings" />
 				</f:facet>
-				<h:panelGrid columns="2" cellpadding="10">
-					<h:outputText value="Settings" />
-				</h:panelGrid>
+				<div class="ui-g">
+					<div class="ui-g-12 ui-md-6 ui-lg-6">
+						<p:panel header="Register company">
+						</p:panel>
+					</div>
+					<div class="ui-g-12 ui-md-6 ui-lg-6"></div>
+					<p:panel header="Register company">
+					</p:panel>
+				</div>
 			</p:tab>
 		</p:tabView>
 
