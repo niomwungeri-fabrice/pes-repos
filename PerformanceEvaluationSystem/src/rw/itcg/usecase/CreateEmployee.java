@@ -42,6 +42,7 @@ public class CreateEmployee {
 			employee = new Employee();
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Employee Registered Successfully", null));
+
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Error:" + e.getMessage(), null));

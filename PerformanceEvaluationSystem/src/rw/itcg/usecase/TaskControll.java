@@ -23,6 +23,12 @@ public class TaskControll {
 	private String keyWord;
 	@Autowired
 	private EmployeeService empService;
+	private List<Employee> getAllemployee;
+	private double itemsDone;
+
+	public TaskControll() {
+		getAllemployee = new ArrayList<Employee>();
+	}
 
 	public List<String> autoCompleteOwner(String query) {
 
@@ -32,7 +38,9 @@ public class TaskControll {
 		for (Employee emp : allEmp) {
 			if (emp.getFirstname().startsWith(query) || emp.getEmployeeId().startsWith(query)
 					|| emp.getLastname().startsWith(query) || emp.getPhoneNumber().startsWith(query)) {
-				empNames.add(emp.getFirstname() +"  "+emp.getLastname());
+				empNames.add(emp.getFirstname() + "  " + emp.getLastname());
+				Employee e = empService.findByUsername(emp.getEmployeeId());
+				getAllemployee.add(e);
 			}
 		}
 		return empNames;
@@ -43,12 +51,28 @@ public class TaskControll {
 				new FacesMessage("Item Selected", event.getObject().toString()));
 	}
 
+	public List<Employee> getGetAllemployee() {
+		return getAllemployee;
+	}
+
+	public void setGetAllemployee(List<Employee> getAllemployee) {
+		this.getAllemployee = getAllemployee;
+	}
+
 	public String getKeyWord() {
 		return keyWord;
 	}
 
 	public void setKeyWord(String keyWord) {
 		this.keyWord = keyWord;
+	}
+
+	public double getItemsDone() {
+		return itemsDone;
+	}
+
+	public void setItemsDone(double itemsDone) {
+		this.itemsDone = itemsDone;
 	}
 
 }

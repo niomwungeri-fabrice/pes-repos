@@ -1,5 +1,8 @@
 package rw.itcg.test;
 
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -17,14 +20,20 @@ public class TestMyApp {
 			ApplicationContext ctx = new ClassPathXmlApplicationContext("classpath:rw/itcg/config/app-context.xml");
 			EmployeeService empService = ctx.getBean(EmployeeService.class);
 			Employee emp = new Employee();
+			emp.setEmployeeId("eMP012");
 			emp.setFirstname("fab");
 			emp.setLastname("fab");
 			emp.setPhoneNumber("2500");
 			emp.setState(false);
 			empService.createEmploye(emp);
-			System.out.println("success");
+			
+			HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+			String ip = httpServletRequest.getRemoteAddr();
+			
+			System.out.println("success"+ip);
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("error:"+e.getMessage());
 		}
 

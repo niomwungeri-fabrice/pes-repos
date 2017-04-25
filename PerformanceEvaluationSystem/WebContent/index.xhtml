@@ -178,21 +178,31 @@
 				<h:form id="taskTabForm">
 					<p:growl id="msgs_task" />
 					<div class="row">
-						<div class="col-xs-6">
+						<div class="col-xs-3">
 							<p:watermark value="Search id,name,etc" for="findEmp" />
-							<p:autoComplete id="findEmp" value="#{taskControll.keyWord}"
+							<p:autoComplete style="width:150px" id="findEmp"
+								value="#{taskControll.keyWord}"
 								completeMethod="#{taskControll.autoCompleteOwner}">
-
 								<p:ajax event="itemSelect"
 									listener="#{taskControll.onItemSelect}"
-									update=":mainTab:taskTabForm:msgs_task" />
+									update=":mainTab:taskTabForm:msgs_task taskTabForm" />
 							</p:autoComplete>
 
 						</div>
-						<div class="col-xs-6">
-							<p:panel header="Employee Profile">
-
-							</p:panel>
+						<div class="col-xs-5">
+							<p:repeat value="#{taskControll.getAllemployee}" var="e">
+								<p:panel header="Employe profile" style="margin-bottom:7px">
+									<p:panelGrid columns="2">
+										<p:outputLabel value="Employee Id:" />
+										<h:outputText value="#{e.employeeId}" />
+									</p:panelGrid>
+									<p:separator />
+									<p:watermark value="Items" for="itemsDone" />
+									<p:inputText value="#{taskControll.itemsDone}" id="itemsDone"
+										title="Enter Items worked today" />
+									<p:tooltip showEvent="focus" hideEvent="blur" for="itemsDone" />
+								</p:panel>
+							</p:repeat>
 						</div>
 					</div>
 				</h:form>
