@@ -14,14 +14,14 @@ import rw.itcg.genericDao.GenericDaoImpl;
 @Repository
 public class TaskDoneDao extends GenericDaoImpl<TaskDone> {
 
-	public TaskDone findById(String taskDoneId) {
+	public TaskDone findById(long taskDoneId) {
 		Query query = sessionfactory().createQuery("select t from TaskDone t where t.jobId = :jobId");
 		query.setParameter("jobId", taskDoneId);
 		return (TaskDone) query.uniqueResult();
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<TaskDone> findByIdList(String taskDoneId) {
+	public List<TaskDone> findByIdList(long taskDoneId) {
 		Query query = sessionfactory().createQuery("select t from TaskDone t where t.jobId = :jobId");
 		query.setParameter("jobId", taskDoneId);
 		return query.list();
