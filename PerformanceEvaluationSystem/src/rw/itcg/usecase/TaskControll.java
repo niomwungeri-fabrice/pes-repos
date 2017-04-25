@@ -28,7 +28,7 @@ public class TaskControll {
 	private List<Employee> getAllemployee;
 	private List<Company> companyList;
 	private List<Job> jobList;
-	private boolean disable;
+	private boolean disable = true;
 
 	private Double itemsDone;
 
@@ -36,7 +36,7 @@ public class TaskControll {
 		getAllemployee = new ArrayList<Employee>();
 		jobList = new ArrayList<Job>();
 		companyList = new ArrayList<Company>();
-		disable = false;
+		disable = true;
 	}
 
 	public List<String> autoCompleteOwner(String query) {
@@ -45,11 +45,13 @@ public class TaskControll {
 		List<Employee> allEmp = empService.findAll();
 
 		for (Employee emp : allEmp) {
-			if (emp.getFirstname().startsWith(query) || emp.getEmployeeId().startsWith(query)
-					|| emp.getLastname().startsWith(query) || emp.getPhoneNumber().startsWith(query)) {
-				empNames.add(emp.getFirstname() + "  " + emp.getLastname());
+			if (emp.getFirstname().contains(query) || emp.getEmployeeId().contains(query)
+					|| emp.getLastname().contains(query)) {
+				empNames.add(emp.getEmployeeId() + "|" + emp.getFirstname());
 				Employee e = empService.findByUsername(emp.getEmployeeId());
-				getAllemployee.add(e);
+				if (getAllemployee.equals(e)) {
+					getAllemployee.remove(e);
+				}
 			}
 		}
 		return empNames;

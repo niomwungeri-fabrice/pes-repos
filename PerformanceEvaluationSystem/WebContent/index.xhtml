@@ -191,7 +191,7 @@
 							</p:autoComplete>
 
 						</div>
-						<div class="col-xs-7">
+						<div class="col-xs-6">
 							<p:repeat value="#{taskControll.getAllemployee}" var="e">
 								<p:panel header="Employe profile" style="margin-bottom:7px">
 									<p:panelGrid columns="2">
@@ -230,7 +230,7 @@
 										<br />
 
 										<p:commandButton value="Submitt" style="margin-top:7px"
-											disabled="#{taskControll.disable}" />
+											disabled="true" />
 
 									</p:fieldset>
 
@@ -263,14 +263,15 @@
 					<p:graphicImage value="/resources/images/Settings-icon.png" />
 					<p:outputLabel value="Settings" />
 				</f:facet>
-				<div class="ui-g">
-					<div class="ui-g-12 ui-md-6 ui-lg-6">
-						<p:panel header="Register company">
+				<div class="row">
+					<div class="col-xs-3">
+						<p:panel header="Organisation or Company">
+							<h:panelGrid columns="2">
+								<p:watermark value="" />
+							</h:panelGrid>
 						</p:panel>
 					</div>
-					<div class="ui-g-12 ui-md-6 ui-lg-6"></div>
-					<p:panel header="Register company">
-					</p:panel>
+
 				</div>
 			</p:tab>
 		</p:tabView>

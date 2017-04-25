@@ -3,7 +3,7 @@ package rw.itcg.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import rw.itcg.dao.JobDoneDao;
+import rw.itcg.dao.TaskDoneDao;
 import rw.itcg.domain.TaskDone;
 
 /**
@@ -13,7 +13,7 @@ import rw.itcg.domain.TaskDone;
 public class JobDoneService extends TransactionAware {
 	
 	@Autowired
-	private JobDoneDao jDao;
+	private TaskDoneDao jDao;
 
 	public void jobCompleted(TaskDone jobCompleted) {
 		try {

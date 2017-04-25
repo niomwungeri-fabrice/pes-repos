@@ -1,5 +1,7 @@
 package rw.itcg.dao;
 
+import java.util.List;
+
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +17,11 @@ public class EmployeeDao extends GenericDaoImpl<Employee> {
 		Query query = sessionfactory().createQuery("select u from Employee u where u.employeeId = :employeeId");
 		query.setParameter("employeeId", empId);
 		return (Employee) query.uniqueResult();
+	}
+	@SuppressWarnings("unchecked")
+	public List<Employee> findByIdList(String empId) {
+		Query query = sessionfactory().createQuery("select u from Employee u where u.employeeId = :employeeId");
+		query.setParameter("employeeId", empId);
+		return query.list();
 	}
 }
