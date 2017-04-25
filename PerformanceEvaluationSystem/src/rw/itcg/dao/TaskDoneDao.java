@@ -5,7 +5,6 @@ import java.util.List;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
-import rw.itcg.domain.Employee;
 import rw.itcg.domain.TaskDone;
 import rw.itcg.genericDao.GenericDaoImpl;
 
@@ -15,16 +14,16 @@ import rw.itcg.genericDao.GenericDaoImpl;
 @Repository
 public class TaskDoneDao extends GenericDaoImpl<TaskDone> {
 
-	public Employee findById(String jobId) {
+	public TaskDone findById(String taskDoneId) {
 		Query query = sessionfactory().createQuery("select t from TaskDone t where t.jobId = :jobId");
-		query.setParameter("jobId", jobId);
-		return (Employee) query.uniqueResult();
+		query.setParameter("jobId", taskDoneId);
+		return (TaskDone) query.uniqueResult();
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Employee> findByIdList(String jobId) {
+	public List<TaskDone> findByIdList(String taskDoneId) {
 		Query query = sessionfactory().createQuery("select t from TaskDone t where t.jobId = :jobId");
-		query.setParameter("jobId", jobId);
+		query.setParameter("jobId", taskDoneId);
 		return query.list();
 	}
 }

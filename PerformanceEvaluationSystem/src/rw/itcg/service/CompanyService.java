@@ -13,6 +13,7 @@ import rw.itcg.domain.Company;
  */
 @Service
 public class CompanyService extends TransactionAware {
+	
 	@Autowired
 	private CompanyDao companyDao;
 
@@ -23,7 +24,17 @@ public class CompanyService extends TransactionAware {
 	public List<Company> findAll() {
 		return companyDao.findAll();
 	}
-	
-	
+
+	public List<Company> findByIdList(String compId) {
+		return companyDao.findByIdList(compId);
+	}
+
+	public void delete(Company comp) {
+		companyDao.delete(comp);
+	}
+
+	public void update(Company comp) {
+		companyDao.update(comp);
+	}
 
 }
