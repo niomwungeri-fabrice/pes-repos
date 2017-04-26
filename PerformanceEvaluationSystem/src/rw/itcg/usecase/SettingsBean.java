@@ -1,13 +1,14 @@
 package rw.itcg.usecase;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import rw.itcg.domain.Company;
 import rw.itcg.service.CompanyService;
 
@@ -20,6 +21,7 @@ public class SettingsBean {
 
 	@Autowired
 	private CompanyService compService;
+	
 	private Company company = new Company();
 
 	public List<Company> getAllcompany() {
