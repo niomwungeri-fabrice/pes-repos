@@ -20,21 +20,22 @@ public class TestMyApp {
 			ApplicationContext ctx = new ClassPathXmlApplicationContext("classpath:rw/itcg/config/app-context.xml");
 			EmployeeService empService = ctx.getBean(EmployeeService.class);
 			Employee emp = new Employee();
-			emp.setEmployeeId("eMP012");
-			emp.setFirstname("fab");
-			emp.setLastname("fab");
-			emp.setPhoneNumber("2500");
+			emp.setEmployeeId("EMP0001");
+			emp.setFirstname("NIYOMWUNGERI");
+			emp.setLastname("Fabrice");
+			emp.setPhoneNumber("+250783741086");
 			emp.setState(false);
 			empService.createEmploye(emp);
-			
-			HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+
+			HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
+					.getExternalContext().getRequest();
 			String ip = httpServletRequest.getRemoteAddr();
-			
-			System.out.println("success"+ip);
+
+			System.out.println("success" + ip);
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("error:"+e.getMessage());
+			System.out.println("error:" + e.getMessage());
 		}
 
 	}

@@ -10,34 +10,40 @@ import javax.persistence.ManyToOne;
  * @author NIYOMWUNGERI
  * Apr 24, 2017, 3:38:05 PM
  */
+
 @Entity
-public class Job extends GenericDomain{
+public class Project extends GenericDomain{
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Column(unique=true)
-	private String jobId;
-	private String jobName;
+	private String projectId;
+	private String projectName;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="company_Id")
 	private Company company;
-
-	public String getJobId() {
-		return jobId;
+	
+	public String getProjectId() {
+		return projectId;
 	}
 
-	public void setJobId(String jobId) {
-		this.jobId = jobId;
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
 	}
 
-	public String getJobName() {
-		return jobName;
+	public String getProjectName() {
+		return projectName;
 	}
 
-	public void setJobName(String jobName) {
-		this.jobName = jobName;
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
 	}
+
+	
+	
+
+
 
 	public Company getCompany() {
 		return company;

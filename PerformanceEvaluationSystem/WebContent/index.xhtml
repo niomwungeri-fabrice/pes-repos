@@ -12,10 +12,11 @@
 	<h:outputStylesheet library="css" name="bootstrap-theme.css" />
 
 </h:head>
-<h:body>
+<h:body style="background-color: #F7F4F4;">
 	<div class="container" style="margin-top: 10px">
 
-		<div class="jumbotron" style="background-color: #3790fc;" />
+		<p:graphicImage url="/resources/images/itcg.png"
+			style="margin-bottom:15px;margin-top:15px;" />
 
 		<p:tabView id="mainTab">
 			<p:tab id="empTab">
@@ -178,16 +179,15 @@
 				<h:form id="taskTabForm">
 					<p:growl id="msgs_task" />
 					<div class="row">
-						<div class="col-xs-3">
+						<div class="col-xs-2">
 							<p:outputLabel value="Search Employee:" />
 							<br />
 							<p:watermark value="Enter id,name,etc" for="findEmp" />
-							<p:autoComplete style="width:150px" id="findEmp"
-								value="#{taskControll.keyWord}"
+							<p:autoComplete id="findEmp" value="#{taskControll.keyWord}"
 								completeMethod="#{taskControll.autoCompleteOwner}">
 								<p:ajax event="itemSelect"
 									listener="#{taskControll.onItemSelect}"
-									update=":mainTab:taskTabForm:msgs_task taskTabForm" />
+									update=":mainTab:taskTabForm" />
 							</p:autoComplete>
 
 						</div>
@@ -209,17 +209,23 @@
 									<p:fieldset legend="Target and achievement ">
 										<p:outputLabel value="Company:" />
 										<br />
-										<p:selectOneMenu value="#{taskControll.companyList}"
-											var="compList">
+										<p:selectOneMenu value="#{taskControll.selectedCompany}">
 											<f:selectItem itemLabel="Select organisazition" itemValue="" />
+											<f:selectItems value="#{taskControll.allcompany}"
+												var="compList" itemLabel="#{compList.companyName}"
+												itemValue="#{compList.companyId}" />
 										</p:selectOneMenu>
 										<br />
 
 										<p:outputLabel value="Job Done:" />
 										<br />
-										<p:selectOneMenu value="#{taskControll.jobList}" var="jList">
+										<p:selectOneMenu value="#{taskControll.selectedJob}">
 											<f:selectItem itemLabel="Select Type of job done"
 												itemValue="" />
+
+											<f:selectItems value="#{taskControll.alljob}" var="jList"
+												itemLabel="#{jList.projectId}"
+												itemValue="#{jList.projectName}" />
 										</p:selectOneMenu>
 										<br />
 										<p:outputLabel value="Items:" />
@@ -231,7 +237,6 @@
 
 										<p:commandButton value="Submitt" style="margin-top:7px"
 											disabled="true" />
-
 									</p:fieldset>
 
 								</p:panel>
@@ -246,8 +251,7 @@
 					<p:graphicImage value="/resources/images/statistics.png" />
 					<p:outputLabel value="Stats and Analysis" />
 				</f:facet>
-				<p:chart type="line" model="#{statistics.dateModel}"
-					style="height:400px;" />
+				<p:chart type="line" model="#{statistics.dateModel}" />
 			</p:tab>
 			<p:tab>
 				<f:facet name="title">
@@ -263,45 +267,67 @@
 					<p:graphicImage value="/resources/images/Settings-icon.png" />
 					<p:outputLabel value="Settings" />
 				</f:facet>
-				<div class="row">
-					<div class="col-xs-7">
-						<p:panel header="Organisation or Company">
-							<h:panelGrid columns="3">
-								<p:watermark value="Compony Id" for="companyId" />
-								<p:inputText value="#{settingsBean.company.companyId}"
-									id="companyId" label="Company Id" required="true"
-									title="Enter CompanyId" />
-								<p:tooltip for="companyId" showEvent="focus" hideEvent="blur" />
+				<h:form id="settingsForm">
+					<p:growl id="growl" />
+					<div class="row">
+						<div class="col-xs-7">
+							<p:panel header="Organisation or Company">
+								<h:panelGrid columns="3">
+									<p:watermark value="Compony Id" for="companyId" />
+									<p:inputText value="#{settingsBean.company.companyId}"
+										id="companyId" label="Company Id" title="Enter CompanyId" />
+									<p:tooltip for="companyId" showEvent="focus" hideEvent="blur" />
 
-								<p:watermark value="Compony name" for="companyName" />
-								<p:inputText value="#{settingsBean.company.companyName}"
-									label="Company Name" required="true" id="companyName"
-									style="margin-top:7px;margin-bottom:7px;"
-									title="Enter company name (e.g.Minagri)" />
-								<p:tooltip for="companyName" showEvent="focus" hideEvent="blur" />
-								
-								
-							</h:panelGrid>
-							<p:separator />
-							<p:dataTable var="compList" value="#{settingsBean.allcompany}">
-								<p:column headerText="Company Id">
-									<p:outputLabel value="#{compList.companyId}" />
-								</p:column>
-								<p:column headerText="Company Name">
-									<p:outputLabel value="#{compList.companyName}" />
-								</p:column>
-								<p:column headerText="Actions">
-									<p:commandButton value="Add Project" icon="fa fa-plus-circle"
-										id="addProject" />
-									<p:tooltip id="toolTipTrack" for="addProject"
-										value="Add project or Department within this organization or company"
-										trackMouse="true" />
-								</p:column>
-							</p:dataTable>
-						</p:panel>
+									<p:watermark value="Compony name" for="companyName" />
+									<p:inputText value="#{settingsBean.company.companyName}"
+										label="Company Name" id="companyName"
+										style="margin-top:7px;margin-bottom:7px;"
+										title="Enter company name (e.g.Minagri)" />
+									<p:tooltip for="companyName" showEvent="focus" hideEvent="blur" />
+
+									<p:outputLabel value="" />
+									<p:commandButton value="Create" icon="fa fa-save"
+										action="#{settingsBean.createCompany}" update="settingsForm" />
+
+								</h:panelGrid>
+								<p:separator />
+								<p:dataTable var="compList" value="#{settingsBean.allcompany}">
+									<p:column headerText="Company Id">
+										<p:outputLabel value="#{compList.companyId}" />
+									</p:column>
+									<p:column headerText="Company Name">
+										<p:outputLabel value="#{compList.companyName}" />
+									</p:column>
+									<p:column headerText="Actions">
+										<center>
+											<p:commandButton value="Add project" process="@this"
+												onclick="PF('dlgComments').show();" icon="fa fa-plus-circle" />
+										</center>
+										<p:dialog header="Add Project or Department"
+											widgetVar="dlgComments" modal="true">
+											<p:messages id="msgJob" closable="true" />
+											<p:watermark value="Company Id" for="cId" />
+											<p:inputText
+												value="#{compList.companyId}"
+												disabled="true" id="cId" />
+											<br />
+											<p:watermark value="Project ID" for="pId" />
+											<p:inputText value="#{settingsBean.project.projectId}"
+												id="pId" style="margin-top:7px;margin-bottom:7px;" />
+											<br />
+											<p:watermark value="Project Name" for="pName" />
+											<p:inputText value="#{settingsBean.project.projectName}"
+												id="pName" style="margin-top:7px;margin-bottom:7px;" />
+											<br />
+											<p:commandButton value="Add" icon="fa fa-plus-circle"
+												action="#{settingsBean.addJob}" update="@this" />
+										</p:dialog>
+									</p:column>
+								</p:dataTable>
+							</p:panel>
+						</div>
 					</div>
-
-				</div>
+				</h:form>
 			</p:tab>
 		</p:tabView>
 

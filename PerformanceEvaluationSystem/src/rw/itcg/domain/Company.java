@@ -20,7 +20,7 @@ public class Company extends GenericDomain{
 	private String companyName;
 	
 	@OneToMany(mappedBy="company")
-	private List<Job> jobList;
+	private List<Project> projectList;
 	public String getCompanyId() {
 		return companyId;
 	}
@@ -33,12 +33,10 @@ public class Company extends GenericDomain{
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}
-	public List<Job> getJobList() {
-		return jobList;
+	public List<Project> getProjectList() {
+		return projectList;
 	}
-	public void setJobList(List<Job> jobList) {
-		this.jobList = jobList;
+	public void setProjectList(List<Project> projectList) {
+		this.projectList = projectList;
 	}
-	
-	
 }	
